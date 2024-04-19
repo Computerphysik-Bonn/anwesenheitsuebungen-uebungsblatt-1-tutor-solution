@@ -6,8 +6,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#define BUFFER_LENGTH 8 
+#include <string.h>
+#define BUFFER_LENGTH 16 //Arbitralely chosen, just to be big enough for the given line size.
 
 int main()
 {
@@ -33,5 +33,12 @@ int main()
 	fprintf(stdout, "%s", buffer);
 	fprintf(stdout, "%d\n", lines);
 	#endif 
+
+	//Now iterating through the dataset1 file.
+	for(int i = 0; i < lines; i++)
+	{
+		fgets(buffer, BUFFER_LENGTH, fp);
+		fprintf(stdout, "%f\n", atof(buffer));
+	}
 	return 0;
 }
