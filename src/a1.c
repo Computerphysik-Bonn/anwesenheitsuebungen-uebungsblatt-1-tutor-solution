@@ -12,6 +12,13 @@
 int main()
 {
 	FILE *fp; //fp: File pointer
+	
+	if( (fp = fopen("../data/dataset1", "r") ) == NULL) // Creating a If-Statement in case for some reason the function cannot access the file.
+	{
+		fprintf(stderr, "Something went wrong opening the file.\n");
+		exit(-1);
+	}
+
 	char buffer[BUFFER_LENGTH]; //Create buffer for later data storing
 	int lines; //Declare variable for the amount of lines to store
 	
@@ -19,7 +26,12 @@ int main()
 	fgets(buffer, BUFFER_LENGTH, fp); //Stores a line in a file specific to the fp. fgets() will read the line until it encounters a '\n' (new line)-character.
 	lines = atoi(buffer);	//Interestingly, this atoi() function can filter a '\n' character if it appears in the buffer.
 
+
+	//Making sure everything is alright
+	//Be careful, here we use some pre-processor definitions, if you don't what it is or what is going on in here, it is neccessary to look it up.
+	#ifdef DEBUG
 	fprintf(stdout, "%s", buffer);
-	fprintf(stdout, "%d", lines);
+	fprintf(stdout, "%d\n", lines);
+	#endif 
 	return 0;
 }
