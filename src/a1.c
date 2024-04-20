@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #define BUFFER_LENGTH 16 //Arbitralely chosen, just to be big enough for the given line size.
 
 int main()
