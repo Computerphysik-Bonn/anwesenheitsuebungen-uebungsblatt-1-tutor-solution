@@ -14,3 +14,15 @@ This bash script, needs to be made runnable first with the following command:
 If the script is runnable in the first place without issuing that command, you have a security problem on your computer.
 
 Then just issue the compiled code with "./code.bin" .
+
+As you can see, you have many compilation scripts in this folder. To vertain degree or complexity of your project it is okey to just have a compilation script. But maybe for clearer handling some chose to use Makefiles, where you can have one file and put there many compilation possibilieties and options into it. 
+You can clearly do this too with a bash script, but here you have clear organisation off all.
+
+Use
+	make option
+
+For using one of the compilation options you have. Look into the file and see what kind of options there are. They are denoted as "read", "debug" and so on.
+So
+	make read
+
+Would compile the program where it just reads from the dataset1.
