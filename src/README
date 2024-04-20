@@ -1,0 +1,16 @@
+To be able to run following codes, you first need to compile them.
+
+Usually you just put in your terminal:
+
+	gcc code.c --output code.bin [--etc further optimization flags]
+
+Where the --output name maybe be chosen by yourself in a purposefully manner.
+
+To make live more easy, we offload this command into a bash (bash is a Shell program in Linux, under different OS's it is called different) script, such as the "compile.sh" you see. Look inside and see what is written in there.
+This bash script, needs to be made runnable first with the following command:
+	
+	chmod u+x compile.sh
+
+If the script is runnable in the first place without issuing that command, you have a security problem on your computer.
+
+Then just issue the compiled code with "./code.bin" .
