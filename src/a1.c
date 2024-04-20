@@ -14,6 +14,8 @@ int main()
 {
 	FILE *fp; //fp: File pointer
 	
+	//Be careful, here we use some pre-processor definitions, if you don't what it is or what is going on in here, it is neccessary to look it up. But do not worry it is not hard.
+	#ifdef DATASET1
 	if( (fp = fopen("../data/dataset1", "r") ) == NULL) // Creating a If-Statement in case for some reason the function cannot access the file.
 	{
 		fprintf(stderr, "Something went wrong opening the file.\n");
@@ -37,7 +39,6 @@ int main()
 
 
 	//Making sure everything is alright
-	//Be careful, here we use some pre-processor definitions, if you don't what it is or what is going on in here, it is neccessary to look it up.
 	#ifdef DEBUG
 	fprintf(stdout, "%s", buffer);
 	fprintf(stdout, "%d\n", lines);
@@ -69,8 +70,26 @@ int main()
 			#ifdef DEBUG
 			fprintf(stdout, "CSQSUM: %f\n", csq_sum);
 			#endif
+		//We can redirect the output not only to stdout or stderr, but directly into a file, by using the defined file pointer.
 		fprintf(fp_csqsum, "%f\n", csq_sum);
 		#endif
 	}
+	#endif
+
+
+
+
+	#ifdef DATASET2
+	if( (fp = fopen("../data/dataset2", "r")) == NULL)
+	{
+		fprintf(stderr, "Something went wrong opening the file.\n");
+	}
+
+
+
+
+
+
+
 	return 0;
 }
