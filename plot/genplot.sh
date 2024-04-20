@@ -1,0 +1,2 @@
+clear
+gnuplot tabular.gpi
