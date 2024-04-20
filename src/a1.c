@@ -8,11 +8,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define BUFFER_LENGTH 16 //Arbitralely chosen, just to be big enough for the given line size.
+#ifdef DATASET2
+	#include <math.h>
+#endif
+
+//Arbitralely chosen, just to be big enough for the given line size.
+#define BUFFER_LENGTH 16 
 
 int main()
 {
-	FILE *fp; //fp: File pointer
+	//fp: File pointer
+	FILE *fp; 
 	
 	//Be careful, here we use some pre-processor definitions, if you don't what it is or what is going on in here, it is neccessary to look it up. But do not worry it is not hard.
 	#ifdef DATASET1
@@ -83,13 +89,42 @@ int main()
 	if( (fp = fopen("../data/dataset2", "r")) == NULL)
 	{
 		fprintf(stderr, "Something went wrong opening the file.\n");
+		exit(-1);
 	}
+	FILE *fp_store;
+	if( (fp_store = fopen("../data/tabular", "w")) == NULL)
+	{
+		fprintf(stderr, "Something went wrong opening the file.\n");
+	}
+	int length;
+	//Since dataset2 is literally a binary file where we cannot read from it as it was with the dataset1, we have to use other functions. 
+	//fread has 4 Arguments
+	//	1. Address of value to store.
+	//	2. Size of bytes to be read.
+	//	3. Amount of byte-blocks to be read.
+	//	4. File pointer.
+	//
+	//	For further documentation see "man fread" in the terminal or on the linux C documentation pages.
+	fread(&length ,4, 1, fp);
+	#ifdef DEBUG
+		fprintf(stdout, "%d\n", length);
+	#endif
 
+	//Create array in the heap with malloc just as before.
+	double *data = (double *) malloc(sizeof(double)*length);
+	for(int i = 0; i < length; i++)
+	{
+		fread(&(data[i]), 8, 1, fp);
+		#ifdef DEBUG
+		fprintf(stdout, "%f\t%f\n", data[i], sin(data[i]));
+		#endif
+		fprintf(fp_store, "%f\t%f\n", data[i], sin(data[i]));
+		
+	}
+	#endif
 
-
-
-
-
+	//If you look closely, you maybe see that we actually do not need the malloc function in here. We could just simply offloaded the current read value into a variable and then directly wrote it into a file which would make the code much more efficient. The malloc function is just here for demonstration purposes.
+	//If you are curious about efficiency in you programs. You can use the "perf" programm in you terminal and make benchmarks. But not only for benchmarks, you can also debug with it. Give it a try!
 
 	return 0;
 }
