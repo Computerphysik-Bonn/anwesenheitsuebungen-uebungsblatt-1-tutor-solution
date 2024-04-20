@@ -1,0 +1,24 @@
+#################################
+#Plot configuration
+set terminal pdf
+set grid
+
+
+set xlabel "sin(x)"
+set ylabel "x"
+
+set yrange [0:3]
+set xrange [0:4]
+
+#################################
+#Titles
+TITLE = "Werte"
+
+#################################
+#Data
+data = "../data/tabular"
+
+#################################
+#Plotting
+set output "tabular.pdf"
+plot data using 1:2 with points pt 3 ps 0.25 lc "blue" title TITLE
