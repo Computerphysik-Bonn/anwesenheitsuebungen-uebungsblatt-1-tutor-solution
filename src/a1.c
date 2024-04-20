@@ -19,7 +19,15 @@ int main()
 		fprintf(stderr, "Something went wrong opening the file.\n");
 		exit(-1);
 	}
-
+	
+	#ifdef CSQSUM
+	FILE *fp_csqsum;
+	if ( (fp_csqsum = fopen("../data/csqsum", "w")) == NULL)
+	{
+		fprintf(stderr, "Something went wrong opening the file.\n");
+		exit(-1);
+	}
+	#endif
 	char buffer[BUFFER_LENGTH]; //Create buffer for later data storing
 	int lines; //Declare variable for the amount of lines to store
 	
@@ -34,12 +42,35 @@ int main()
 	fprintf(stdout, "%s", buffer);
 	fprintf(stdout, "%d\n", lines);
 	#endif 
-
+	
+	//One of the tasks is it to store the data into an array. We could use a static array with "data[1000]", but since we cannot guarantee that this would be for every dataset and we want to be a bit more general, we will use a malloc() funtion to store the data in the heap, so we can manage data dynamically.
+	//We  create a pointer * of type float, called data. Thise pointer should now point to the first address of a datastructure which is called by malloc(). Each element has the size of float and has lines-times elements.
+	//Since the malloc function returns a void pointer, we need to cast it into a float pointer.
+	
+	float *data = (float*) malloc(sizeof(float)*lines); 
+	
+	#ifdef CSQSUM
+	float csq_sum = 0;
+	#endif
 	//Now iterating through the dataset1 file.
 	for(int i = 0; i < lines; i++)
 	{
 		fgets(buffer, BUFFER_LENGTH, fp);
-		fprintf(stdout, "%f\n", atof(buffer));
+		#ifdef DEBUG
+			fprintf(stdout, "Data after atof(): %f\n", atof(buffer));
+		#endif
+		data[i] = atof(buffer);
+		#ifdef DEBUG
+			fprintf(stdout, "Data in Heap: %f\n", data[i]);
+		#endif
+		
+		#ifdef CSQSUM
+		csq_sum += data[i]*data[i];
+			#ifdef DEBUG
+			fprintf(stdout, "CSQSUM: %f\n", csq_sum);
+			#endif
+		fprintf(fp_csqsum, "%f\n", csq_sum);
+		#endif
 	}
 	return 0;
 }

@@ -1,3 +1,2 @@
 !.gitignore
-read_dataset1
-read_debug_dataset1
+*.bin
